@@ -15,7 +15,19 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
+// 后面的请求都会先到这里 然后5秒后执行后面相应的代码  可以实现拦截器
+app.use(function(req, res, next){
+  console.log('xx')
+  setTimeout(function(){
+    next()
+  }, 5000)
+})
+
 app.use(favicon());
+
+
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -23,8 +35,34 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
+
+
+
+
 app.get('/', routes.index);
 app.get('/users', users.list);
+app.get('/teachers', users.teachers);
+
+
+// 拦截器概念？
+//app.use(function(req, res, next){
+//  console.log(333)
+//  setTimeout(function(){
+//    console.log(222)
+//    console.log(req.method);
+//    next();
+//  }, 5000);
+//  next();
+//});
+
+app.post('/admin/article', function(req, res){
+  console.log(111)
+  res.json(200, {status: -1});
+});
+
+
+
+
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

@@ -3,9 +3,31 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    
   </head>
   <body>
     <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
+    
+    <button>ajax 请求</button>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.js"></script>
+    
+    <script>
+      $(function(){
+        $('button').click(function(){
+          $.ajax({
+            type:'POST',
+            url:'/admin/article',
+            data:{title:'Hello World', content:'Hello Express'},
+            success: function(data){
+              console.log(data);
+            },
+            error: function(err){
+              console.log(err);
+            }
+          })
+        })
+      });
+    </script>
   </body>
 </html>
