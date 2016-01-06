@@ -1,0 +1,11 @@
+# filter files
+*.mdb
+*.ldb
+*.sln
+*.git
+*.config
+
+
+node_modules
+bin
+
