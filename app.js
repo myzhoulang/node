@@ -10,24 +10,36 @@ var routes = require('./routes');
 var users = require('./routes/user');
 
 var app = express();
+var admin = express();
+var sub = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
+admin.get('/', function(req, res){
+  console.log(admin.mountpath);
+  res.send('Admin Homepage');
+});
+
+sub.get('/', function(req, res){
+  console.log('Sub Homepage');
+  res.send('Sub Homepage');
+});
+
+app.use('/admin', admin);
+admin.use('/sub', sub);
+
 // 后面的请求都会先到这里 然后5秒后执行后面相应的代码  可以实现拦截器
-app.use(function(req, res, next){
-  console.log('xx')
-  setTimeout(function(){
-    next()
-  }, 5000)
-})
+// app.use(function(req, res, next){
+//   console.log('xx')
+//   setTimeout(function(){
+//     next()
+//   }, 5000)
+// })
 
 app.use(favicon());
-
-
-
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
